@@ -1,5 +1,0 @@
-mkdir -p .github/workflows
-# create .github/workflows/pages.yml with the content above
-git add .github/workflows/pages.yml
-git commit -m "Add GitHub Pages workflow: build Vite and deploy ./dist"
-git push origin main
