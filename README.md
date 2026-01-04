@@ -1,7 +1,7 @@
 
   # Dynamic Mental Health Website
 
-  This is a code bundle for Dynamic Mental Health Website. The original project is available at https://www.figma.com/design/BVrUsfC2AdPEsbjSR32RDZ/Dynamic-Mental-Health-Website.
+  This is a code bundle for Dynamic Mental Health Website. 
 
   ## Running the code
 
