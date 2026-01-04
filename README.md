@@ -1,2 +1,11 @@
-# mentalhealthclinicalguide
-A mental health clinical guide for the Annapolis Valley Health region for practitioners. 
+
+  # Dynamic Mental Health Website
+
+  This is a code bundle for Dynamic Mental Health Website. The original project is available at https://www.figma.com/design/BVrUsfC2AdPEsbjSR32RDZ/Dynamic-Mental-Health-Website.
+
+  ## Running the code
+
+  Run `npm i` to install the dependencies.
+
+  Run `npm run dev` to start the development server.
+  
