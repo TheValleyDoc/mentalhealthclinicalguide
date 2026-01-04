@@ -1,3 +1,4 @@
+# .github/workflows/pages.yml
 name: Deploy to GitHub Pages
 
 on:
@@ -31,8 +32,24 @@ jobs:
 
       - name: Build site
         run: |
-          # assumes package.json has a "build" script (vite build)
           npm run build
+
+      - name: Prepare SPA fallback and inspect dist
+        run: |
+          set -e
+          echo "Listing root folder for context:"
+          ls -la
+          echo "Listing dist (should contain index.html):"
+          ls -la ./dist || true
+          if [ -f ./dist/index.html ]; then
+            cp ./dist/index.html ./dist/404.html
+          else
+            echo "ERROR: ./dist/index.html not found"
+            ls -R .
+            exit 1
+          fi
+          echo "Contents of dist:"
+          ls -R ./dist
 
       - name: Upload artifact for GitHub Pages
         uses: actions/upload-pages-artifact@v1
