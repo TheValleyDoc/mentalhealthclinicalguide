@@ -1,18 +1,17 @@
-# .github/workflows/pages.yml
 name: Deploy to GitHub Pages
-
 on:
   push:
     branches:
       - main
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -20,48 +19,32 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: "18"
 
       - name: Install dependencies
-        run: |
-          if [ -f package-lock.json ] || [ -f yarn.lock ]; then
-            npm ci
-          else
-            npm install
-          fi
+        run: npm ci || npm install
 
       - name: Build site
-        run: |
-          npm run build
+        run: npm run build
 
-      - name: Prepare SPA fallback and inspect dist
-        run: |
-          set -e
-          echo "Listing root folder for context:"
-          ls -la
-          echo "Listing dist (should contain index.html):"
-          ls -la ./dist || true
-          if [ -f ./dist/index.html ]; then
-            cp ./dist/index.html ./dist/404.html
-          else
-            echo "ERROR: ./dist/index.html not found"
-            ls -R .
-            exit 1
-          fi
-          echo "Contents of dist:"
-          ls -R ./dist
+      - name: Copy index.html to 404.html for SPA routing
+        run: cp ./dist/index.html ./dist/404.html
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v4
 
       - name: Upload artifact for GitHub Pages
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@v4
-
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v1
+        id: deployment
+        uses: actions/deploy-pages@v4
