@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -25,7 +26,9 @@ jobs:
         run: npm ci || npm install
 
       - name: Build site
-        run: npm run build
+        run: |
+          npm run build
+          touch dist/.nojekyll
 
       - name: Copy index.html to 404.html for SPA routing
         run: cp ./dist/index.html ./dist/404.html
