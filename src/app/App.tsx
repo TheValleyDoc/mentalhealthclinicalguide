@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { Navigation } from "./components/Navigation";
 import { HomePage } from "./components/HomePage";
 import { DisorderPage } from "./components/DisorderPage";
@@ -10,7 +10,6 @@ export default function App() {
       <div className="min-h-screen bg-gray-50">
         <Navigation />
         <Routes>
-          <Route path="/mentalhealthclinicalguide" element={<HomePage />} />
           <Route path="/" element={<HomePage />} />
           <Route
             path="/depression"
